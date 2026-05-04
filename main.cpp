@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 void bubbleSort(int array[], int size){
   int temp;
@@ -14,8 +15,33 @@ void bubbleSort(int array[], int size){
 	}
 }
 
-int main (){
+struct Student {
+  int id;
+  std::string name;
+  std::string email;
+  std::string NIM;
+};
+
+Student sort_students(Student students[]);
+
+void print_students(Student students[], size_t size) {
+  for (int i = 0; i <= size; i++) {
+    auto student = students[i];
+
+    std::cout << "id\t |\t nama \t|\t email \t|\t NIM\n";
+    std::cout << student.id << "\t";
+    std::cout << student.name << "\t";
+    std::cout << student.email << "\t";
+    std::cout << student.NIM << "\n";
+  }
+}
+
+int main () {
 	int input;
+
+  size_t students_size = 0;
+  const int MAX_STUDENTS_SIZE = 10;
+  Student students[MAX_STUDENTS_SIZE] = {};
 	
 	do {
 		std::cout << "=========================\n";
@@ -31,7 +57,12 @@ int main (){
 		
 			switch (input) {
 				case 1:{
-					std::cout << "Menu 1" << "\n";
+					std::cout << "Showing list of students: " << "\n";
+
+            // TODO: implement
+            // sort_students(students);
+            print_students(students, students_size);
+
 					break;
 				}
 				case 2:{
