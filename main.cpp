@@ -65,10 +65,28 @@ int main () {
 
 					break;
 				}
-				case 2:{
-					std::cout << "Menu 2" << "\n";
+
+				case 2: {
+					std::cout << "Adding new students..." << "\n";
+          Student student;
+
+          student.id = students_size;
+
+          std::cout << "nama: ";
+          std::cin >> student.name;
+
+          std::cout << "email: ";
+          std::cin >> student.email;
+
+          std::cout << "student NIM: ";
+          std::cin >> student.NIM;
+
+          students[students_size] = student;
+          students_size++;
+
 					break;
-				}		
+				}
+
 				case 3:{
 					std::cout << "Menu 3" << "\n";
 					break;
