@@ -25,10 +25,11 @@ struct Student {
 Student sort_students(Student students[]);
 
 void print_students(Student students[], size_t size) {
+  std::cout << "id\t |\t nama \t|\t email \t|\t NIM\n";
+
   for (int i = 0; i <= size; i++) {
     auto student = students[i];
 
-    std::cout << "id\t |\t nama \t|\t email \t|\t NIM\n";
     std::cout << student.id << "\t";
     std::cout << student.name << "\t";
     std::cout << student.email << "\t";
@@ -48,10 +49,11 @@ int main () {
 		std::cout << "Student Management System\n";
 		std::cout << "=========================\n";
 		std::cout << "1. View Student List\n";
-		std::cout << "2. Create Student List\n";
-		std::cout << "3. Update Student List\n";
-		std::cout << "4. Delete Student List\n";
+		std::cout << "2. Create Student\n";
+		std::cout << "3. Update Student\n";
+		std::cout << "4. Delete Student\n";
 		std::cout << "5. Exit\n";
+
 		std::cout << "Masukkan pilihan (1-5): ";
 		std::cin >> input;
 		
