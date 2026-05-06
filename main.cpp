@@ -40,6 +40,18 @@ void print_students(Student students[], size_t size) {
   }
 }
 
+Student* find_students(Student students[], int students_size, int target_id) {
+   for (int i = 0; i < students_size; i++) {
+     Student student = students[i];
+
+     if (student.id == target_id) {
+       return &students[i];
+     }
+   }
+
+   return NULL;
+}
+
 int main () {
 	int input;
 
