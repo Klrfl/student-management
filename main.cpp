@@ -24,8 +24,6 @@ void sort_by_nim(Student array[], size_t size){
 	}
 }
 
-
-
 void print_students(Student students[], size_t size) {
 	
 	std::cout << "ID\t|\tName\t|\tEmail\t\t|\tNIM\n";
@@ -38,6 +36,18 @@ void print_students(Student students[], size_t size) {
     std::cout << student.email << "\t ";
     std::cout << student.NIM << "\n";
   }
+}
+
+Student* find_students(Student students[], int students_size, int target_id) {
+   for (int i = 0; i < students_size; i++) {
+     Student student = students[i];
+
+     if (student.id == target_id) {
+       return &students[i];
+     }
+   }
+
+   return NULL;
 }
 
 int main () {
@@ -123,8 +133,32 @@ int main () {
 				break;
 				}
 
-			case 3:{
-				std::cout << "Menu 3" << "\n";
+			case 3: {
+				std::cout << "Update student" << "\n";
+
+        print_students(students, students_size);
+
+        int target_id;
+        std::cout << "input id of student to update: ";
+        std::cin >> target_id;
+        Student* student = find_students(students, students_size, target_id);
+
+        std::string new_name = student->name;
+        std::cout << "input student new name (leave empty to keep): ";
+        std::cin >> new_name;
+        student->name = new_name;
+
+        std::string new_email = student->email;
+        std::cout << "input student new email (leave empty to keep): ";
+        std::cin >> new_email;
+        student->email = new_email;
+
+        std::string new_NIM = student->NIM;
+        std::cout << "input student new NIM (leave empty to keep): ";
+        std::cin >> new_NIM;
+        student->NIM = new_NIM;
+
+        std::cout << "successfully updated student!";
 				break;
 			}
 			case 4:{
