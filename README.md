@@ -11,12 +11,13 @@ materi yang diimplementasi
 
 fitur:
 
-- [ ] lihat daftar student
-  - [ ] lihat daftar student, sort berdasarkan NIM
+- [x] lihat daftar student
+	- [x] lihat daftar student, sort berdasarkan NIM
+	- [x] lihat daftar student tanpa disorting
 - [ ] nambah student
 - [ ] cari student
   - [ ] student berdasarkan nama
   - [ ] student berdasarkan id
 - [ ] perbarui student
 - [ ] hapus student
-- [ ] exit
+- [x] exit
