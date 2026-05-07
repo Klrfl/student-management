@@ -85,30 +85,34 @@ int main () {
 						std::cin >> option;
 						
 						switch(option){
-							case 1:{
+							case 1: {
 								Student temp[MAX_STUDENTS_SIZE];
 								for (size_t i = 0; i < students_size; i++){
 									temp[i] = students[i];
 								}
 									
-								sort_by_nim(students, students_size);
+								sort_by_nim(temp, students_size);
+
 								std::cout << "Displaying Student Data Sorted by NIM:\n";
-								print_students(students, students_size);
+								print_students(temp, students_size);
 								looping = 0;
 								break;
 							}
-							case 2:{
+
+							case 2: {
 								std::cout << "Displaying Student Data:\n";
 								print_students(students, students_size);
 								looping = 0;
 								break;
 							}
-							default:{
+
+							default: {
 								std::cout <<"Invalid Input";
 							}
 						}
 					} while (looping);					
 				}
+
 				break;
 			}
 
@@ -131,7 +135,7 @@ int main () {
 				students_size++;
 
 				break;
-				}
+			}
 
 			case 3: {
 				std::cout << "Update student" << "\n";
@@ -161,15 +165,18 @@ int main () {
         std::cout << "successfully updated student!";
 				break;
 			}
-			case 4:{
+
+			case 4: {
 				std::cout << "Menu 4" << "\n";
 				break;
 			}
-			case 5:{
+
+			case 5: {
 				std::cout << "Goodbye, Admin!";
 				break;
 			}
-			default:{
+
+			default: {
 				std::cout << "Invalid Input\n";
 				break;
 			}
