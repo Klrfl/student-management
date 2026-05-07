@@ -4,7 +4,7 @@ materi yang diimplementasi
 
 - [x] array ()
 - [x] struct
-- [ ] pointer
+- [x] pointer
 - [x] searching (binary, sequential)
 - [x] sorting (bubble sort)
 - [x] recursion (diimplementasi di sort)
@@ -12,12 +12,12 @@ materi yang diimplementasi
 fitur:
 
 - [x] lihat daftar student
-	- [x] lihat daftar student, sort berdasarkan NIM
-	- [x] lihat daftar student tanpa disorting
-- [ ] nambah student
+  - [x] berdasarkan NIM
+  - [x] tanpa disorting
+- [x] nambah student
 - [ ] cari student
-  - [ ] student berdasarkan nama
-  - [ ] student berdasarkan id
-- [ ] perbarui student
+  - [ ] berdasarkan nama
+  - [x] berdasarkan id
+- [x] perbarui student
 - [ ] hapus student
 - [x] exit
