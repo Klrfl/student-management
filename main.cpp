@@ -54,7 +54,6 @@ void delete_student(Student students[], size_t &students_size, int target_id) {
   for(int i = 0; i < students_size; i++) {
     Student student = students[i];
     if (student.id == target_id) {
-      std::cout << "student id: " << student.id;
 
       for(int j = i; j < students_size; j++) {
         students[j] = students[j+1]; // shift elements to the left 
@@ -67,6 +66,7 @@ void delete_student(Student students[], size_t &students_size, int target_id) {
 
 int main () {
 	int input;
+  int student_size_total = 0;
 
 	size_t students_size = 0;
 	const int MAX_STUDENTS_SIZE = 10;
@@ -138,7 +138,7 @@ int main () {
 				std::cout << "Adding new students..." << "\n";
 				Student student;
 
-				student.id = students_size;
+				student.id = student_size_total;
 
 				std::cout << "nama: ";
 				std::cin >> student.name;
@@ -151,6 +151,7 @@ int main () {
 
 				students[students_size] = student;
 				students_size++;
+        student_size_total++;
 
 				break;
 			}
