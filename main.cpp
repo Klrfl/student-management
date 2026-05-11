@@ -74,44 +74,47 @@ int main () {
 			case 1:{
 				if (students_size == 0){
 					std::cout << "No Student Data Found" << "\n\n";
-				} else {
-					int option;
-					bool looping = 1;
-					do {
-						std::cout << "View Student Option\n";
-						std::cout << "1. Sort by NIM\n";
-						std::cout << "2. Don't sort\n";
-						std::cout << "Enter Input (1-2): ";
-						std::cin >> option;
-						
-						switch(option){
-							case 1: {
-								Student temp[MAX_STUDENTS_SIZE];
-								for (size_t i = 0; i < students_size; i++){
-									temp[i] = students[i];
-								}
-									
-								sort_by_nim(temp, students_size);
-
-								std::cout << "Displaying Student Data Sorted by NIM:\n";
-								print_students(temp, students_size);
-								looping = 0;
-								break;
-							}
-
-							case 2: {
-								std::cout << "Displaying Student Data:\n";
-								print_students(students, students_size);
-								looping = 0;
-								break;
-							}
-
-							default: {
-								std::cout <<"Invalid Input";
-							}
-						}
-					} while (looping);					
+          break;
 				}
+
+        int option;
+        bool is_looping = true;
+
+        do {
+          std::cout << "View Student Option\n";
+          std::cout << "1. Sort by NIM\n";
+          std::cout << "2. Don't sort\n";
+          std::cout << "Enter Input (1-2): ";
+          std::cin >> option;
+          
+          switch(option) {
+            case 1: {
+              Student temp[MAX_STUDENTS_SIZE];
+              for (size_t i = 0; i < students_size; i++){
+                temp[i] = students[i];
+              }
+                
+              sort_by_nim(temp, students_size);
+
+              std::cout << "Displaying Student Data Sorted by NIM:\n";
+              print_students(temp, students_size);
+              is_looping = 0;
+              break;
+            }
+
+            case 2: {
+              std::cout << "Displaying Student Data:\n";
+              print_students(students, students_size);
+              is_looping = 0;
+              break;
+            }
+
+            default: {
+              std::cout <<"Invalid Input\n";
+            }
+          }
+
+        } while (is_looping);
 
 				break;
 			}
