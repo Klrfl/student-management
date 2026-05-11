@@ -50,6 +50,21 @@ Student* find_students(Student students[], int students_size, int target_id) {
    return NULL;
 }
 
+void delete_student(Student students[], size_t &students_size, int target_id) {
+  for(int i = 0; i < students_size; i++) {
+    Student student = students[i];
+    if (student.id == target_id) {
+      std::cout << "student id: " << student.id;
+
+      for(int j = i; j < students_size; j++) {
+        students[j] = students[j+1]; // shift elements to the left 
+      }
+
+      students_size--;
+    }
+  }
+}
+
 int main () {
 	int input;
 
@@ -170,7 +185,19 @@ int main () {
 			}
 
 			case 4: {
-				std::cout << "Menu 4" << "\n";
+				std::cout << "Delete student" << "\n";
+        print_students(students, students_size);
+        std::cout << "choose student to delete (id): ";
+
+        int target_id;
+        std::cin >> target_id;
+
+        std::cout << students_size;
+        delete_student(students, students_size, target_id);
+        std::cout << students_size;
+
+        std::cout << "successfully deleted student with id " << target_id << ".\n";
+        
 				break;
 			}
 

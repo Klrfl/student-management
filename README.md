@@ -19,5 +19,5 @@ fitur:
   - [ ] berdasarkan nama
   - [x] berdasarkan id
 - [x] perbarui student
-- [ ] hapus student
+- [x] hapus student
 - [x] exit
