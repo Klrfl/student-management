@@ -1,6 +1,6 @@
+#include <exception>
 #include <fstream>
 #include <sstream>
-#include <ios>
 #include <iostream>
 #include <limits>
 #include <string>
@@ -13,9 +13,41 @@ struct Student {
 	std::string NIM;
 };
 
+int get_int_input(const std::string &prompt) {
+  bool is_valid = false;
+  int input;
+
+  while(!is_valid) {
+    std::cout << prompt;
+
+    std::string tmp;
+    std::cin >> tmp;
+
+    try {
+      input = std::stoi(tmp);
+    } catch(std::exception e) {
+      std::cout << "invalid input.\n";
+      continue;
+    }
+
+    if(!std::cin) {
+      std::cin.clear(); 
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::cout << "invalid input.\n";
+      continue;
+    }
+
+    is_valid = true;
+  }
+
+  std::cin.clear(); 
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  return input;
+}
+
 std::string get_str_input(const std::string &prompt) {
   bool is_valid = false;
-  std::string input;
+  std::string input = "";
 
   while(!is_valid) {
     std::cout << prompt;
@@ -27,6 +59,9 @@ std::string get_str_input(const std::string &prompt) {
       std::cout << "invalid input.\n";
       continue;
     }
+
+    is_valid = true;
+    std::cin.clear(); 
   }
 
   return input;
@@ -147,9 +182,8 @@ int main () {
   std::getline(size_file, tmp_line);
   student_size_total = std::stoi(tmp_line);
 
-
 	size_t students_size = 0;
-	const int MAX_STUDENTS_SIZE = 10;
+	const int MAX_STUDENTS_SIZE = 100;
 	Student students[MAX_STUDENTS_SIZE] = {};
 
   read_students_from_csv(students, students_size);
@@ -164,8 +198,7 @@ int main () {
 		std::cout << "4. Delete Student\n";
 		std::cout << "5. Exit\n";
 
-		std::cout << "Enter Input (1-5): ";
-		std::cin >> input;
+		input = get_int_input("Enter Input (1-5): ");
 		
 		switch (input) {
 			case 1:{
@@ -181,8 +214,7 @@ int main () {
           std::cout << "View Student Option\n";
           std::cout << "1. Sort by NIM\n";
           std::cout << "2. Don't sort\n";
-          std::cout << "Enter Input (1-2): ";
-          std::cin >> option;
+          option = get_int_input( "Enter Input (1-2): ");
           
           switch(option) {
             case 1: {
@@ -226,7 +258,9 @@ int main () {
 				student.email = get_str_input("email: ");
         student.NIM = get_str_input("student NIM: ");
 
+        std::cout << "before this?\n";
 				students[students_size] = student;
+        std::cout << "after this.\n";
 
 				students_size++;
 
@@ -242,12 +276,10 @@ int main () {
 
         print_students(students, students_size);
 
-        int target_id;
-        std::cout << "input id of student to update: ";
-        std::cin >> target_id;
+        int target_id = get_int_input( "input id of student to update: ");
         Student* student = find_students(students, students_size, target_id);
-
         std::string tmp = get_str_input("input student new name (leave empty to keep): ");
+
         if(!tmp.empty()) {
           student->name = tmp;
         }
@@ -259,10 +291,14 @@ int main () {
           student->email = tmp;
         }
 
+        tmp.clear();
+
         tmp = get_str_input("input student new NIM (leave empty to keep): ");
         if(!tmp.empty()) {
           student->NIM = tmp;
         }
+
+        tmp.clear();
 
         write_students_to_csv(students, students_size);
 
@@ -275,8 +311,7 @@ int main () {
         print_students(students, students_size);
         std::cout << "choose student to delete (id): ";
 
-        int target_id;
-        std::cin >> target_id;
+        int target_id = get_int_input( "input id of student to update: ");
 
         delete_student(students, students_size, target_id);
         write_students_to_csv(students, students_size);
