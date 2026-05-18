@@ -1,6 +1,8 @@
+#include <exception>
 #include <fstream>
-#include <iostream>
 #include <sstream>
+#include <iostream>
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -11,7 +13,59 @@ struct Student {
 	std::string NIM;
 };
 
-//~ Student sort_students(Student students[]);
+int get_int_input(const std::string &prompt) {
+  bool is_valid = false;
+  int input;
+
+  while(!is_valid) {
+    std::cout << prompt;
+
+    std::string tmp;
+    std::cin >> tmp;
+
+    try {
+      input = std::stoi(tmp);
+    } catch(std::exception e) {
+      std::cout << "invalid input.\n";
+      continue;
+    }
+
+    if(!std::cin) {
+      std::cin.clear(); 
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::cout << "invalid input.\n";
+      continue;
+    }
+
+    is_valid = true;
+  }
+
+  std::cin.clear(); 
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  return input;
+}
+
+std::string get_str_input(const std::string &prompt) {
+  bool is_valid = false;
+  std::string input = "";
+
+  while(!is_valid) {
+    std::cout << prompt;
+    std::getline(std::cin, input);
+
+    if(!std::cin) {
+      std::cin.clear(); 
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::cout << "invalid input.\n";
+      continue;
+    }
+
+    is_valid = true;
+    std::cin.clear(); 
+  }
+
+  return input;
+}
 
 void sort_by_nim(Student array[], size_t size){
 	Student temp;
@@ -128,9 +182,8 @@ int main () {
   std::getline(size_file, tmp_line);
   student_size_total = std::stoi(tmp_line);
 
-
 	size_t students_size = 0;
-	const int MAX_STUDENTS_SIZE = 10;
+	const int MAX_STUDENTS_SIZE = 100;
 	Student students[MAX_STUDENTS_SIZE] = {};
 
   read_students_from_csv(students, students_size);
@@ -145,8 +198,7 @@ int main () {
 		std::cout << "4. Delete Student\n";
 		std::cout << "5. Exit\n";
 
-		std::cout << "Enter Input (1-5): ";
-		std::cin >> input;
+		input = get_int_input("Enter Input (1-5): ");
 		
 		switch (input) {
 			case 1:{
@@ -162,8 +214,7 @@ int main () {
           std::cout << "View Student Option\n";
           std::cout << "1. Sort by NIM\n";
           std::cout << "2. Don't sort\n";
-          std::cout << "Enter Input (1-2): ";
-          std::cin >> option;
+          option = get_int_input( "Enter Input (1-2): ");
           
           switch(option) {
             case 1: {
@@ -199,20 +250,18 @@ int main () {
 
 			case 2: {
 				std::cout << "Adding new students..." << "\n";
+
 				Student student;
 
 				student.id = ++student_size_total;
+        student.name = get_str_input("name: ");
+				student.email = get_str_input("email: ");
+        student.NIM = get_str_input("student NIM: ");
 
-				std::cout << "nama: ";
-				std::cin >> student.name;
-
-				std::cout << "email: ";
-				std::cin >> student.email;
-
-				std::cout << "student NIM: ";
-				std::cin >> student.NIM;
-
+        std::cout << "before this?\n";
 				students[students_size] = student;
+        std::cout << "after this.\n";
+
 				students_size++;
 
         write_students_to_csv(students, students_size);
@@ -227,25 +276,29 @@ int main () {
 
         print_students(students, students_size);
 
-        int target_id;
-        std::cout << "input id of student to update: ";
-        std::cin >> target_id;
+        int target_id = get_int_input( "input id of student to update: ");
         Student* student = find_students(students, students_size, target_id);
+        std::string tmp = get_str_input("input student new name (leave empty to keep): ");
 
-        std::string new_name = student->name;
-        std::cout << "input student new name (leave empty to keep): ";
-        std::cin >> new_name;
-        student->name = new_name;
+        if(!tmp.empty()) {
+          student->name = tmp;
+        }
 
-        std::string new_email = student->email;
-        std::cout << "input student new email (leave empty to keep): ";
-        std::cin >> new_email;
-        student->email = new_email;
+        tmp.clear();
 
-        std::string new_NIM = student->NIM;
-        std::cout << "input student new NIM (leave empty to keep): ";
-        std::cin >> new_NIM;
-        student->NIM = new_NIM;
+        tmp = get_str_input("input student new email (leave empty to keep): ");
+        if(!tmp.empty()) {
+          student->email = tmp;
+        }
+
+        tmp.clear();
+
+        tmp = get_str_input("input student new NIM (leave empty to keep): ");
+        if(!tmp.empty()) {
+          student->NIM = tmp;
+        }
+
+        tmp.clear();
 
         write_students_to_csv(students, students_size);
 
@@ -258,8 +311,7 @@ int main () {
         print_students(students, students_size);
         std::cout << "choose student to delete (id): ";
 
-        int target_id;
-        std::cin >> target_id;
+        int target_id = get_int_input( "input id of student to update: ");
 
         delete_student(students, students_size, target_id);
         write_students_to_csv(students, students_size);
