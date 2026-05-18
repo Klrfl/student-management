@@ -1,5 +1,8 @@
+#include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
+#include <vector>
 
 struct Student {
 	int id;
@@ -25,7 +28,6 @@ void sort_by_nim(Student array[], size_t size){
 }
 
 void print_students(Student students[], size_t size) {
-	
 	std::cout << "ID\t|\tName\t|\tEmail\t\t|\tNIM\n";
 
 	for (size_t i = 0; i < size; i++) {
@@ -64,6 +66,50 @@ void delete_student(Student students[], size_t &students_size, int target_id) {
   }
 }
 
+std::ifstream i_file("data.csv");
+// std::ofstream o_file("data.csv");
+
+void read_students_from_csv(Student *students, size_t &student_size) {
+  std::string tmp_line;
+  std::vector<std::vector<std::string>> rows = {};
+
+
+  // TODO: skip reading the header
+  while (std::getline(i_file, tmp_line)) {
+    std::vector<std::string> row = {};
+    std::stringstream line_stream(tmp_line);
+    std::string cell;
+
+    /** cols (0-indexed) in the .csv file are:
+    * id
+    * name
+    * email
+    * nim
+    */
+    while(std::getline(line_stream, cell, ',')) {
+      row.push_back(cell);
+    }
+
+    rows.push_back(row);
+    row.clear();
+  }
+
+  for (int i = 0; i < rows.size(); i++ ) {
+    auto row = rows.at(i);
+    Student new_student;
+    
+    new_student.id = std::stoi(row.at(0));
+    new_student.name = row.at(1);
+    new_student.email = row.at(2);
+    new_student.NIM = row.at(3);
+
+    students[i] = new_student;
+    student_size++;
+  }
+};
+
+void write_students_to_csv();
+
 int main () {
 	int input;
   int student_size_total = 0;
@@ -71,7 +117,12 @@ int main () {
 	size_t students_size = 0;
 	const int MAX_STUDENTS_SIZE = 10;
 	Student students[MAX_STUDENTS_SIZE] = {};
-	
+
+  read_students_from_csv(students, students_size);
+  print_students(students, students_size);
+
+  return 0;
+
 	do {
 		std::cout << "=========================\n";
 		std::cout << "Student Management System\n";
