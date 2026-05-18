@@ -67,7 +67,6 @@ void delete_student(Student students[], size_t &students_size, int target_id) {
 }
 
 std::ifstream i_file("data.csv");
-// std::ofstream o_file("data.csv");
 
 void read_students_from_csv(Student *students, size_t &student_size) {
   std::string tmp_line;
@@ -108,7 +107,17 @@ void read_students_from_csv(Student *students, size_t &student_size) {
   }
 };
 
-void write_students_to_csv();
+void write_students_to_csv(Student students[], size_t &students_size) {
+  std::ofstream file("data.csv");
+
+  for (int i = 0; i < students_size; i++) {
+    Student student = students[i];
+    std::string row = std::to_string(student.id) + "," + student.name + "," + student.email + "," + student.NIM;
+    file << row;
+
+    file << "\n";
+  }
+};
 
 int main () {
 	int input;
@@ -119,9 +128,6 @@ int main () {
 	Student students[MAX_STUDENTS_SIZE] = {};
 
   read_students_from_csv(students, students_size);
-  print_students(students, students_size);
-
-  return 0;
 
 	do {
 		std::cout << "=========================\n";
@@ -202,7 +208,10 @@ int main () {
 
 				students[students_size] = student;
 				students_size++;
-        student_size_total++;
+
+        write_students_to_csv(students, students_size);
+        std::ofstream size_file("total.txt");
+        size_file << student_size_total;
 
 				break;
 			}
@@ -232,6 +241,8 @@ int main () {
         std::cin >> new_NIM;
         student->NIM = new_NIM;
 
+        write_students_to_csv(students, students_size);
+
         std::cout << "successfully updated student!";
 				break;
 			}
@@ -244,9 +255,8 @@ int main () {
         int target_id;
         std::cin >> target_id;
 
-        std::cout << students_size;
         delete_student(students, students_size, target_id);
-        std::cout << students_size;
+        write_students_to_csv(students, students_size);
 
         std::cout << "successfully deleted student with id " << target_id << ".\n";
         
