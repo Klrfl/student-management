@@ -57,11 +57,11 @@ void delete_student(Student students[], size_t &students_size, int target_id) {
     Student student = students[i];
     if (student.id == target_id) {
 
+      students_size--;
+
       for(int j = i; j < students_size; j++) {
         students[j] = students[j+1]; // shift elements to the left 
       }
-
-      students_size--;
     }
   }
 }
@@ -122,6 +122,12 @@ void write_students_to_csv(Student students[], size_t &students_size) {
 int main () {
 	int input;
   int student_size_total = 0;
+
+  std::ifstream size_file("total.txt");
+  std::string tmp_line;
+  std::getline(size_file, tmp_line);
+  student_size_total = std::stoi(tmp_line);
+
 
 	size_t students_size = 0;
 	const int MAX_STUDENTS_SIZE = 10;
@@ -195,7 +201,7 @@ int main () {
 				std::cout << "Adding new students..." << "\n";
 				Student student;
 
-				student.id = student_size_total;
+				student.id = ++student_size_total;
 
 				std::cout << "nama: ";
 				std::cin >> student.name;
