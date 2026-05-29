@@ -221,13 +221,14 @@ int main () {
 		std::cout << "=========================\n";
 		std::cout << "Student Management System\n";
 		std::cout << "=========================\n";
-		std::cout << "1. View Student List\n";
-		std::cout << "2. Create Student\n";
-		std::cout << "3. Update Student\n";
-		std::cout << "4. Delete Student\n";
-		std::cout << "5. Exit\n";
+		std::cout << "[1] View Student List\n";
+		std::cout << "[2] Create Student\n";
+		std::cout << "[3] Update Student\n";
+		std::cout << "[4] Delete Student\n";
+		std::cout << "[5] Find Student\n";
+		std::cout << "[0] Exit\n";
 
-		input = get_int_input("Enter Input (1-5): ");
+		input = get_int_input("Enter Input (0-5): ");
 		
 		switch (input) {
 			case 1:{
@@ -351,12 +352,12 @@ int main () {
 			}
 
       case 5: {
-        std::cout << "finding student\n";
+        std::cout << "finding student...\n";
         int target_id = get_int_input("input id of student to find: ");
 
         Student* student = find_student(students, students_size, target_id);
         if(student == NULL) {
-          std::cout << "no student found.";
+          std::cout << "no student with id << " << target_id << " found.\n";
           continue;
         }
 
