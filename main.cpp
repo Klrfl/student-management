@@ -1,3 +1,4 @@
+#include <cmath>
 #include <exception>
 #include <fstream>
 #include <sstream>
@@ -110,16 +111,28 @@ void print_students(Student students[], size_t size) {
   }
 }
 
-Student* find_students(Student students[], int students_size, int target_id) {
-   for (int i = 0; i < students_size; i++) {
-     Student student = students[i];
+Student* find_student(Student students[], int students_size, int target_id) {
+  if(students_size <= 0) return NULL;
+  if(students_size == 1) return &students[0];
 
-     if (student.id == target_id) {
-       return &students[i];
-     }
-   }
+  int left_ptr = 0;
+  int right_ptr = students_size-1;
+  int mid_ptr;
 
-   return NULL;
+  while(left_ptr < right_ptr) {
+    mid_ptr = std::floor(left_ptr + (right_ptr - left_ptr) / 2);
+
+    Student student = students[mid_ptr];
+    if(student.id == target_id) return &students[mid_ptr];
+
+    if(student.id < target_id) {
+      left_ptr = mid_ptr+1;
+    } else if(student.id > target_id) { 
+      right_ptr = mid_ptr-1;
+    }
+  }
+
+  return NULL;
 }
 
 void delete_student(Student students[], size_t &students_size, int target_id) {
@@ -293,7 +306,7 @@ int main () {
         print_students(students, students_size);
 
         int target_id = get_int_input( "input id of student to update: ");
-        Student* student = find_students(students, students_size, target_id);
+        Student* student = find_student(students, students_size, target_id);
         std::string tmp = get_str_input("input student new name (leave empty to keep): ");
 
         if(!tmp.empty()) {
@@ -337,7 +350,22 @@ int main () {
 				break;
 			}
 
-			case 5: {
+      case 5: {
+        std::cout << "finding student\n";
+        int target_id = get_int_input("input id of student to find: ");
+
+        Student* student = find_student(students, students_size, target_id);
+        if(student == NULL) {
+          std::cout << "no student found.";
+          continue;
+        }
+
+        std::cout << "Nama\t|\tID \n";
+        std::cout << student->name << "\t|\t" << student->id << "\n";
+        break;
+      }
+
+			case 0: {
 				std::cout << "Goodbye, Admin!";
 				break;
 			}
@@ -348,5 +376,5 @@ int main () {
 			}
 		}
 
-	} while (input != 5);
+	} while (input != 0);
 }
