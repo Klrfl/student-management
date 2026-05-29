@@ -67,18 +67,34 @@ std::string get_str_input(const std::string &prompt) {
   return input;
 }
 
-void sort_by_nim(Student array[], size_t size){
-	Student temp;
+void swap(Student &a, Student &b) {
+    Student tmp = a;
+    a=b;
+    b=tmp;
+}
 
-	for (int i=0; i < (int)size-1; i++) {
-		for (int j=0; j < (int)size-i-1; j++) {
-			if (array[j].NIM > array[j+1].NIM) {
-				temp = array[j];
-				array[j] = array[j+1];
-				array[j+1] = temp;
-			}
-		}
-	}
+int partition(Student array[], int low_i, int high_i) {
+    std::string pivot = array[high_i].NIM; 
+    int cnt = low_i-1;
+
+    for(int i = low_i; i < high_i; i++) {
+        if(array[i].NIM < pivot) {
+            cnt++;
+            swap(array[i], array[cnt]);
+        }
+    }
+
+    swap(array[cnt+1], array[high_i]);
+    return cnt+1;
+}
+
+void sort_by_nim(Student array[], int low_i, int high_i) {
+    if(low_i < high_i) {
+        int p = partition(array, low_i, high_i);
+
+        sort_by_nim(array, low_i, p-1);
+        sort_by_nim(array, p+1, high_i);
+    }
 }
 
 void print_students(Student students[], size_t size) {
@@ -223,7 +239,7 @@ int main () {
                 temp[i] = students[i];
               }
                 
-              sort_by_nim(temp, students_size);
+              sort_by_nim(temp, 0, students_size);
 
               std::cout << "Displaying Student Data Sorted by NIM:\n";
               print_students(temp, students_size);
