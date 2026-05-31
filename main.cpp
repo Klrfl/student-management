@@ -157,7 +157,7 @@ void read_students_from_csv(Student *students, size_t &student_size) {
 
 
   // TODO: skip reading the header
-  while (std::getline(i_file, tmp_line)) {
+  while (std::getline(i_file, tmp_line) && !tmp_line.empty()) {
     std::vector<std::string> row = {};
     std::stringstream line_stream(tmp_line);
     std::string cell;
