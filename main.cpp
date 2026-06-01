@@ -119,7 +119,7 @@ Student* find_student(Student students[], int students_size, int target_id) {
   int right_ptr = students_size-1;
   int mid_ptr;
 
-  while(left_ptr < right_ptr) {
+  while(left_ptr <= right_ptr) {
     mid_ptr = std::floor(left_ptr + (right_ptr - left_ptr) / 2);
 
     Student student = students[mid_ptr];
@@ -288,9 +288,7 @@ int main () {
 				student.email = get_str_input("email: ");
         student.NIM = get_str_input("student NIM: ");
 
-        std::cout << "before this?\n";
 				students[students_size] = student;
-        std::cout << "after this.\n";
 
 				students_size++;
 
@@ -308,6 +306,11 @@ int main () {
 
         int target_id = get_int_input( "input id of student to update: ");
         Student* student = find_student(students, students_size, target_id);
+        if(student == NULL) {
+          std::cout << "no student found.\n";
+          break; 
+        }
+
         std::string tmp = get_str_input("input student new name (leave empty to keep): ");
 
         if(!tmp.empty()) {
@@ -332,16 +335,14 @@ int main () {
 
         write_students_to_csv(students, students_size);
 
-        std::cout << "successfully updated student!";
+        std::cout << "successfully updated student!\n";
 				break;
 			}
 
 			case 4: {
 				std::cout << "Delete student" << "\n";
         print_students(students, students_size);
-        std::cout << "choose student to delete (id): ";
-
-        int target_id = get_int_input( "input id of student to update: ");
+        int target_id = get_int_input( "input id of student to delete: ");
 
         delete_student(students, students_size, target_id);
         write_students_to_csv(students, students_size);
@@ -357,7 +358,7 @@ int main () {
 
         Student* student = find_student(students, students_size, target_id);
         if(student == NULL) {
-          std::cout << "no student with id << " << target_id << " found.\n";
+          std::cout << "no student with id " << target_id << " found.\n";
           continue;
         }
 
